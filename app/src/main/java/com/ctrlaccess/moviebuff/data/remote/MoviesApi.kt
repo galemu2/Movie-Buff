@@ -1,4 +1,4 @@
-package com.ctrlaccess.moviebuff.data.remote.api
+package com.ctrlaccess.moviebuff.data.remote
 
 import com.ctrlaccess.moviebuff.BuildConfig
 

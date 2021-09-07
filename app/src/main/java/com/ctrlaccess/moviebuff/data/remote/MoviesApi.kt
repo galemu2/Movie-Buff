@@ -1,9 +1,7 @@
 package com.ctrlaccess.moviebuff.data.remote
 
-import com.ctrlaccess.moviebuff.BuildConfig
 import com.ctrlaccess.moviebuff.data.MoviesCurrent
-import com.ctrlaccess.moviebuff.data.Result
-import com.ctrlaccess.moviebuff.util.Constants.API_KEY
+import com.ctrlaccess.moviebuff.util.UtilObjects.API_KEY
 import retrofit2.http.GET
 import retrofit2.http.Query
 

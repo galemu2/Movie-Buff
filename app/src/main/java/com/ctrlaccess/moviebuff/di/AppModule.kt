@@ -1,7 +1,7 @@
 package com.ctrlaccess.moviebuff.di
 
 import com.ctrlaccess.moviebuff.data.remote.MoviesApi
-import com.ctrlaccess.moviebuff.util.Constants.BASE_URL
+import com.ctrlaccess.moviebuff.util.UtilObjects.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

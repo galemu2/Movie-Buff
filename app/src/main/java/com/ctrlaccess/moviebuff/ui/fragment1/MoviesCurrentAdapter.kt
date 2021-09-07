@@ -9,8 +9,7 @@ import com.bumptech.glide.Glide
 import com.ctrlaccess.moviebuff.R
 import com.ctrlaccess.moviebuff.data.Result
 import com.ctrlaccess.moviebuff.databinding.ItemMovieCurrentBinding
-import com.ctrlaccess.moviebuff.util.Constants.IMAGE_BASE_URL
-import com.ctrlaccess.moviebuff.util.Constants.IMAGE_SIZE
+import com.ctrlaccess.moviebuff.util.UtilObjects.getImageUrl
 
 class MoviesCurrentAdapter(
     diffCallback: DiffUtil.ItemCallback<Result> = object :
@@ -53,7 +52,7 @@ class MoviesCurrentAdapter(
 
         fun bind(movie: Result) {
 
-            val url = IMAGE_BASE_URL + IMAGE_SIZE + movie.poster_path
+            val url = getImageUrl(movie)
 
             binding.apply {
                 Glide.with(imageViewCurrentMovie)

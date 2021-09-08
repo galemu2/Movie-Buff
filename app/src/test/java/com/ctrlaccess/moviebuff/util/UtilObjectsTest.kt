@@ -29,8 +29,8 @@ class UtilObjectsTest {
 
     @Test
     fun `get image url returns a concatenated string`() {
-        val out = getImageUrl(result)
-        val compare = IMAGE_BASE_URL + IMAGE_SIZE + result.poster_path
-        assertThat(out).isEqualTo(compare)
+        val actual = getImageUrl(result)
+        val expected = IMAGE_BASE_URL + IMAGE_SIZE + result.poster_path
+        assertThat(actual).isEqualTo(expected)
     }
 }

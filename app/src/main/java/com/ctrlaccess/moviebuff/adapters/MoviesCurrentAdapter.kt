@@ -1,7 +1,8 @@
-package com.ctrlaccess.moviebuff.ui.fragment1
+package com.ctrlaccess.moviebuff.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -42,7 +43,7 @@ class MoviesCurrentAdapter(
         return differ.currentList.size
     }
 
-    fun submitMovies(moviesList: List<Result>) {
+    fun submitCurrentMovies(moviesList: List<Result>) {
         differ.submitList(moviesList)
     }
 

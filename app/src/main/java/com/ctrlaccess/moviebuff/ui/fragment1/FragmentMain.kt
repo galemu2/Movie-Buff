@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.ctrlaccess.moviebuff.R
 import com.ctrlaccess.moviebuff.adapters.MoviesCurrentAdapter
+import com.ctrlaccess.moviebuff.adapters.MoviesLoadStateAdapter
 import com.ctrlaccess.moviebuff.adapters.MoviesPopularAdaptor
 import com.ctrlaccess.moviebuff.databinding.FragmentMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +32,7 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
         _binding = FragmentMainBinding.bind(view)
 
         moviesCurrentAdapter = setupCurrentMoviesRecyclerView()
-        moviesPopularAdaptor = setupPopularMovesAdapter()
+        moviesPopularAdaptor = setupPopularMovesAdapter() // paging adapter
 
         viewModel.currentMovies.observe(viewLifecycleOwner, Observer {
             moviesCurrentAdapter.submitCurrentMovies(it)
@@ -44,11 +45,16 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
         }
     }
 
+    // setup paging adapter
     private fun setupPopularMovesAdapter(): MoviesPopularAdaptor {
         val adaptor = MoviesPopularAdaptor()
         binding.apply {
             recyclerViewMoviesPopular.setHasFixedSize(true)
-            recyclerViewMoviesPopular.adapter = adaptor
+            recyclerViewMoviesPopular.adapter = adaptor.withLoadStateHeaderAndFooter(
+                header = MoviesLoadStateAdapter { adaptor.retry() },
+                footer = MoviesLoadStateAdapter { adaptor.retry() }
+            )
+
         }
         return adaptor
     }

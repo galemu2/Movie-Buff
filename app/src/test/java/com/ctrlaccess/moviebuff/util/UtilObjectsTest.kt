@@ -1,6 +1,6 @@
 package com.ctrlaccess.moviebuff.util
 
-import com.ctrlaccess.moviebuff.data.Result
+import com.ctrlaccess.moviebuff.data.model.Result
 import com.ctrlaccess.moviebuff.util.UtilObjects.IMAGE_BASE_URL
 import com.ctrlaccess.moviebuff.util.UtilObjects.IMAGE_SIZE
 import com.ctrlaccess.moviebuff.util.UtilObjects.getImageUrl

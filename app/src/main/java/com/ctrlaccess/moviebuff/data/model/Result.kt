@@ -1,4 +1,4 @@
-package com.ctrlaccess.moviebuff.data
+package com.ctrlaccess.moviebuff.data.model
 
 data class Result(
     val adult: Boolean,

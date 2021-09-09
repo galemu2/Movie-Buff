@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ctrlaccess.moviebuff.R
-import com.ctrlaccess.moviebuff.data.Result
+import com.ctrlaccess.moviebuff.data.model.Result
 import com.ctrlaccess.moviebuff.databinding.ItemMoviePopularBinding
 import com.ctrlaccess.moviebuff.util.UtilObjects
 
 class MoviesPopularAdaptor(
     diffcallback: DiffUtil.ItemCallback<Result> =
         object : DiffUtil.ItemCallback<Result>() {
+
             override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
                 return oldItem.id == newItem.id
             }
@@ -54,12 +55,9 @@ class MoviesPopularAdaptor(
                 textPopularMovieReleaseDate.text = item.release_date
                 textPopularMovieDuration.text = "---"
                 textPopularMovieRating.text = item.vote_average.toString()
-
             }
         }
-
     }
-
 }
 
 

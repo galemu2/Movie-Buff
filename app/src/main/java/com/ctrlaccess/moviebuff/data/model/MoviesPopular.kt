@@ -1,4 +1,6 @@
-package com.ctrlaccess.moviebuff.data
+package com.ctrlaccess.moviebuff.data.model
+
+import com.ctrlaccess.moviebuff.data.model.Result
 
 data class MoviesPopular(
     val page: Int,

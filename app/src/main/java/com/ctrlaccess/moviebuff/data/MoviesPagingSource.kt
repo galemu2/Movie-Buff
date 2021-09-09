@@ -1,12 +1,13 @@
 package com.ctrlaccess.moviebuff.data
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.ctrlaccess.moviebuff.data.model.Result
 import com.ctrlaccess.moviebuff.data.remote.MoviesApi
-import javax.inject.Inject
 
 
-class MoviesPagingSource(val moviesApi: MoviesApi) : PagingSource<Int, Result>() {
+class MoviesPagingSource(private val moviesApi: MoviesApi) : PagingSource<Int, Result>() {
 
     private val STARTING_PAGE = 1
 
@@ -14,13 +15,13 @@ class MoviesPagingSource(val moviesApi: MoviesApi) : PagingSource<Int, Result>()
         return try {
             val pageNumber = params.key ?: 1
             // query the api
-            val response = moviesApi.getPopularMovies(page = pageNumber)
-
+            val response = moviesApi.getPopularMovies(pageNumber)
+            Log.d("TAG", ">>> page number $pageNumber")
             // returned on success
             LoadResult.Page(
                 data = response.results,
                 prevKey = if (pageNumber == STARTING_PAGE) null else pageNumber - 1,
-                nextKey = if (response.results.isNotEmpty()) null else pageNumber + 1
+                nextKey = if (response.results.isNullOrEmpty()) null else pageNumber + 1
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

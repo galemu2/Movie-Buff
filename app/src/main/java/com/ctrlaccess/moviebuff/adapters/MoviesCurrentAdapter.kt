@@ -2,13 +2,12 @@ package com.ctrlaccess.moviebuff.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ctrlaccess.moviebuff.R
-import com.ctrlaccess.moviebuff.data.Result
+import com.ctrlaccess.moviebuff.data.model.Result
 import com.ctrlaccess.moviebuff.databinding.ItemMovieCurrentBinding
 import com.ctrlaccess.moviebuff.util.UtilObjects.getImageUrl
 

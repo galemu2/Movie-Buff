@@ -1,9 +1,10 @@
 package com.ctrlaccess.moviebuff.data.remote
 
-import com.ctrlaccess.moviebuff.data.MoviesCurrent
-import com.ctrlaccess.moviebuff.data.MoviesPopular
+import com.ctrlaccess.moviebuff.data.model.MoviesCurrent
+import com.ctrlaccess.moviebuff.data.model.MoviesPopular
 import com.ctrlaccess.moviebuff.util.UtilObjects.API_KEY
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -33,7 +34,6 @@ interface MoviesApi {
         page: Int,
         @Query("language")
         language: String = "en-US",
-
         @Query("api_key")
         apiKey: String = API_KEY
     ): MoviesPopular

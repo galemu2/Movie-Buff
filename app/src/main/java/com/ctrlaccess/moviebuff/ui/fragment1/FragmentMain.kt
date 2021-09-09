@@ -11,6 +11,7 @@ import com.ctrlaccess.moviebuff.adapters.MoviesCurrentAdapter
 import com.ctrlaccess.moviebuff.adapters.MoviesPopularAdaptor
 import com.ctrlaccess.moviebuff.databinding.FragmentMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -36,8 +37,8 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
             moviesCurrentAdapter.submitCurrentMovies(it)
         })
 
-        lifecycleScope.launch {
-            viewModel.flow.collectLatest { pagingData ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.popularMovies.collectLatest { pagingData ->
                 moviesPopularAdaptor.submitData(pagingData)
             }
         }

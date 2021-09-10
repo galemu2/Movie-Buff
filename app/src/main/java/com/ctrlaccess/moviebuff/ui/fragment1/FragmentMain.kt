@@ -2,10 +2,12 @@ package com.ctrlaccess.moviebuff.ui.fragment1
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.ctrlaccess.moviebuff.R
 import com.ctrlaccess.moviebuff.adapters.MoviesCurrentAdapter
 import com.ctrlaccess.moviebuff.adapters.MoviesLoadStateAdapter
@@ -43,6 +45,17 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
                 moviesPopularAdaptor.submitData(pagingData)
             }
         }
+
+        moviesPopularAdaptor.addLoadStateListener { loadState ->
+            binding.apply {
+                val currentState = loadState.source.refresh
+
+                progressBarUiLoading.isVisible = currentState is LoadState.Loading
+                container.isVisible = currentState is LoadState.NotLoading
+                fabUiNotLoading.isVisible = currentState is LoadState.Error
+            }
+
+        }
     }
 
     // setup paging adapter
@@ -54,7 +67,7 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
                 header = MoviesLoadStateAdapter { adaptor.retry() },
                 footer = MoviesLoadStateAdapter { adaptor.retry() }
             )
-
+            fabUiNotLoading.setOnClickListener { adaptor.retry() }
         }
         return adaptor
     }

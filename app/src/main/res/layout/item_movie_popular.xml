@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_item_movie_popular"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/container_item_movie_popular"
-    android:background="@drawable/back_popular"
-    android:layout_marginBottom="2dp">
+    android:layout_marginBottom="2dp"
+    android:background="@drawable/back_popular">
 
 
     <ImageView
@@ -21,9 +21,9 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -35,17 +35,20 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="Title:"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
 
         <TextView
             android:id="@+id/text_popular_movie_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
             android:paddingStart="8dp"
-            tools:text="Hot Movie"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Hot Movie" />
     </LinearLayout>
 
     <LinearLayout
@@ -62,17 +65,17 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="Rating:"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
 
         <TextView
             android:id="@+id/text_popular_movie_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
-            tools:text="4.2"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+
+            android:textColor="@color/black"
+            tools:text="4.2" />
     </LinearLayout>
 
     <LinearLayout
@@ -89,17 +92,17 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="Duration:"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
 
         <TextView
             android:id="@+id/text_popular_movie_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
-            tools:text="1:35 hrs"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:textColor="@color/black"
+
+            tools:text="1:35 hrs" />
     </LinearLayout>
 
     <LinearLayout
@@ -116,17 +119,16 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="Date released:"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
 
         <TextView
             android:id="@+id/text_popular_movie_release_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
-            tools:text="Jan 1 2020"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:textColor="@color/black"
+            tools:text="Jan 1 2020" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

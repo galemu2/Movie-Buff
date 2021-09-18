@@ -23,7 +23,7 @@ class MoviesPagingSource(private val moviesApi: MoviesApi) : PagingSource<Int, R
                 prevKey = if (pageNumber == STARTING_PAGE) null else pageNumber - 1,
                 nextKey = if (response.results.isNullOrEmpty()) null else pageNumber + 1
             )
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             LoadResult.Error(e)
         }
     }

@@ -42,8 +42,11 @@ class MoviesCurrentAdapter(
         return differ.currentList.size
     }
 
-    fun submitCurrentMovies(moviesList: List<Result>) {
-        differ.submitList(moviesList)
+    fun submitCurrentMovies(moviesList: List<Result>?) {
+        differ.currentList.clear()
+        moviesList?.let {
+            differ.submitList(it)
+        }
     }
 
 

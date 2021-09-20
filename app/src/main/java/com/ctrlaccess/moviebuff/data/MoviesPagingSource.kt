@@ -16,7 +16,6 @@ class MoviesPagingSource(private val moviesApi: MoviesApi) : PagingSource<Int, R
             val pageNumber = params.key ?: 1
             // query the api
             val response = moviesApi.getPopularMovies(pageNumber)
-            Log.d("TAG", ">>> page number $pageNumber")
             // returned on success
             LoadResult.Page(
                 data = response.results,

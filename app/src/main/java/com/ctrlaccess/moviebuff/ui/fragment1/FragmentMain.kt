@@ -1,8 +1,8 @@
 package com.ctrlaccess.moviebuff.ui.fragment1
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -13,14 +13,16 @@ import com.ctrlaccess.moviebuff.adapters.MoviesCurrentAdapter
 import com.ctrlaccess.moviebuff.adapters.MoviesLoadStateAdapter
 import com.ctrlaccess.moviebuff.adapters.MoviesPopularAdaptor
 import com.ctrlaccess.moviebuff.databinding.FragmentMainBinding
+import com.ctrlaccess.moviebuff.util.Status
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FragmentMain : Fragment(R.layout.fragment_main) {
 
+    private val TAG = "FragmentMain"
     private val viewModel by viewModels<MoviesViewModel>()
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
@@ -33,27 +35,63 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMainBinding.bind(view)
 
-        moviesCurrentAdapter = setupCurrentMoviesRecyclerView()
+        moviesCurrentAdapter = setupCurrentMoviesAdapter()
         moviesPopularAdaptor = setupPopularMovesAdapter() // paging adapter
 
+
+        viewModel.getCurrentMovies()
+
+
         viewModel.currentMovies.observe(viewLifecycleOwner, Observer {
-            moviesCurrentAdapter.submitCurrentMovies(it)
+            it?.getContentIfNotHandled()?.let { result ->
+                when (result.status) {
+                    Status.SUCCESS -> {
+                        //binding.progressBarUiLoading.isVisible = false
+                         moviesCurrentAdapter.submitCurrentMovies(result.data?.results)
+                    }
+                    Status.LOADING -> {
+                        //binding.progressBarUiLoading.isVisible = true
+                    }
+                    Status.ERROR -> {
+                        //binding.progressBarUiLoading.isVisible = false
+                        Snackbar.make(
+                            requireView().rootView,
+                            result.message ?: "Unknown error!!",
+                            Snackbar.LENGTH_LONG
+                        )
+                            .show()
+                    }
+                }
+            }
         })
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.popularMovies.collectLatest { pagingData ->
                 moviesPopularAdaptor.submitData(pagingData)
             }
-        }
 
-        moviesPopularAdaptor.addLoadStateListener { loadState ->
-            binding.apply {
-                val currentState = loadState.source.refresh
+            moviesPopularAdaptor.addLoadStateListener { loadState ->
+                binding.apply {
+                    val currentState = loadState.source.refresh
+                    when (currentState) {
+                        is LoadState.Loading -> {
+                            Log.d(TAG, ">>> Loading")
 
-                progressBarUiLoading.isVisible = currentState is LoadState.Loading
-                container.isVisible = currentState is LoadState.NotLoading
-                fabUiNotLoading.isVisible = currentState is LoadState.Error
+                        }
+                        is LoadState.NotLoading -> {
+                            Log.d(TAG, ">> NotLoading")
+                        }
+                        is LoadState.Error -> {
+                            Log.d(TAG, ">> Error")
+                        }
+                    }
+
+                    //progressBarUiLoading.isVisible = currentState is LoadState.Loading
+                    //container.isVisible = currentState is LoadState.NotLoading
+                    //fabUiNotLoading.isVisible = currentState is LoadState.Error
+                }
             }
+
 
         }
     }
@@ -72,7 +110,7 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
         return adaptor
     }
 
-    private fun setupCurrentMoviesRecyclerView(): MoviesCurrentAdapter {
+    private fun setupCurrentMoviesAdapter(): MoviesCurrentAdapter {
         val adapter = MoviesCurrentAdapter()
         binding.apply {
             recyclerViewMoviesCurrent.setHasFixedSize(true)

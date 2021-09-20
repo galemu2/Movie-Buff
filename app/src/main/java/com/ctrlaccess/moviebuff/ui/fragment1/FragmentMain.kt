@@ -47,7 +47,6 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
                         binding.textViewMoviesCurrent.visibility = View.VISIBLE
                         binding.progressBarMoviesCurrent.visibility = View.GONE
                         moviesCurrentAdapter.submitCurrentMovies(result.data?.results)
-
                     }
                     Status.LOADING -> {
                         binding.textViewMoviesCurrent.visibility = View.GONE
@@ -71,37 +70,37 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
             viewModel.popularMovies.collectLatest { pagingData ->
                 moviesPopularAdaptor.submitData(pagingData)
             }
+        }
 
-            moviesPopularAdaptor.addLoadStateListener { loadState ->
-                binding.apply {
-                    val currentState = loadState.source.refresh
-                    when (currentState) {
-                        is LoadState.Loading -> {
+        moviesPopularAdaptor.addLoadStateListener { loadState ->
+            binding.apply {
 
-//                            container1.visibility = View.GONE
-//                            progressBarMoviesPopular.visibility = View.VISIBLE
-                            Log.d(TAG, " >>> Loading ... ")
-                        }
-                        is LoadState.NotLoading -> { // success
+                container1.visibility = View.VISIBLE
+                val currentState = loadState.source.refresh
+                when (currentState) {
+                    is LoadState.Loading -> {
 
-//                            container1.visibility = View.VISIBLE
-//                            progressBarMoviesPopular.visibility = View.GONE
-                            Log.d(TAG, ">> Success !!! ")
-                        }
-                        is LoadState.Error -> {
-//                            container1.visibility = View.GONE
-//                            progressBarMoviesPopular.visibility = View.GONE
-                            Log.d(TAG, ">> Error ?!?!?")
-                        }
+                        progressBarMoviesPopular.visibility = View.VISIBLE
+                        textViewMoviesPopular.visibility = View.GONE
+                        recyclerViewMoviesPopular.visibility = View.GONE
+                        Log.d(TAG, " >>> Loading ... ")
                     }
+                    is LoadState.NotLoading -> { // success
 
-                    //progressBarUiLoading.isVisible = currentState is LoadState.Loading
-                    //container.isVisible = currentState is LoadState.NotLoading
-                    //fabUiNotLoading.isVisible = currentState is LoadState.Error
+                        container1.visibility = View.VISIBLE
+                        textViewMoviesPopular.visibility = View.VISIBLE
+                        recyclerViewMoviesPopular.visibility = View.VISIBLE
+                        progressBarMoviesPopular.visibility = View.GONE
+                        Log.d(TAG, ">> Success !!! ")
+                    }
+                    is LoadState.Error -> {
+                        container1.visibility = View.GONE
+                        progressBarMoviesPopular.visibility = View.GONE
+                        Log.d(TAG, ">> Error ?!?!?")
+                    }
                 }
+
             }
-
-
         }
     }
 

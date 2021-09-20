@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/recyclerView_movies_popular"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerView_movies_popular"
             app:layout_constraintStart_toStartOf="@+id/recyclerView_movies_popular"
             app:layout_constraintTop_toTopOf="@+id/recyclerView_movies_popular"
             tools:visibility="visible" />

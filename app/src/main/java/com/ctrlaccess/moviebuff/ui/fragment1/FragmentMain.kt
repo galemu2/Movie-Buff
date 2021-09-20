@@ -24,6 +24,7 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
 
     private val TAG = "FragmentMain"
     private val viewModel by viewModels<MoviesViewModel>()
+
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
         get() = _binding!!
@@ -38,22 +39,23 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
         moviesCurrentAdapter = setupCurrentMoviesAdapter()
         moviesPopularAdaptor = setupPopularMovesAdapter() // paging adapter
 
-
         viewModel.getCurrentMovies()
-
-
         viewModel.currentMovies.observe(viewLifecycleOwner, Observer {
             it?.getContentIfNotHandled()?.let { result ->
                 when (result.status) {
                     Status.SUCCESS -> {
-                        //binding.progressBarUiLoading.isVisible = false
-                         moviesCurrentAdapter.submitCurrentMovies(result.data?.results)
+                        binding.textViewMoviesCurrent.visibility = View.VISIBLE
+                        binding.progressBarMoviesCurrent.visibility = View.GONE
+                        moviesCurrentAdapter.submitCurrentMovies(result.data?.results)
+
                     }
                     Status.LOADING -> {
-                        //binding.progressBarUiLoading.isVisible = true
+                        binding.textViewMoviesCurrent.visibility = View.GONE
+                        binding.progressBarMoviesCurrent.visibility = View.VISIBLE
                     }
                     Status.ERROR -> {
-                        //binding.progressBarUiLoading.isVisible = false
+                        binding.textViewMoviesCurrent.visibility = View.GONE
+                        binding.progressBarMoviesCurrent.visibility = View.GONE
                         Snackbar.make(
                             requireView().rootView,
                             result.message ?: "Unknown error!!",
@@ -75,14 +77,21 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
                     val currentState = loadState.source.refresh
                     when (currentState) {
                         is LoadState.Loading -> {
-                            Log.d(TAG, ">>> Loading")
 
+//                            container1.visibility = View.GONE
+//                            progressBarMoviesPopular.visibility = View.VISIBLE
+                            Log.d(TAG, " >>> Loading ... ")
                         }
-                        is LoadState.NotLoading -> {
-                            Log.d(TAG, ">> NotLoading")
+                        is LoadState.NotLoading -> { // success
+
+//                            container1.visibility = View.VISIBLE
+//                            progressBarMoviesPopular.visibility = View.GONE
+                            Log.d(TAG, ">> Success !!! ")
                         }
                         is LoadState.Error -> {
-                            Log.d(TAG, ">> Error")
+//                            container1.visibility = View.GONE
+//                            progressBarMoviesPopular.visibility = View.GONE
+                            Log.d(TAG, ">> Error ?!?!?")
                         }
                     }
 
@@ -105,7 +114,7 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
                 header = MoviesLoadStateAdapter { adaptor.retry() },
                 footer = MoviesLoadStateAdapter { adaptor.retry() }
             )
-            fabUiNotLoading.setOnClickListener { adaptor.retry() }
+            // fabUiNotLoading.setOnClickListener { adaptor.retry() }
         }
         return adaptor
     }

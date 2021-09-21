@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.ctrlaccess.moviebuff.R
 import com.ctrlaccess.moviebuff.adapters.MoviesCurrentAdapter
@@ -37,6 +38,13 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
         _binding = FragmentMainBinding.bind(view)
 
         moviesCurrentAdapter = setupCurrentMoviesAdapter()
+        moviesCurrentAdapter.setOnItemClickListener { result ->
+            findNavController().navigate(
+                FragmentMainDirections.actionFragmentMainToFragmentDetails2(
+                    result
+                )
+            )
+        }
         moviesPopularAdaptor = setupPopularMovesAdapter() // paging adapter
 
         viewModel.getCurrentMovies()

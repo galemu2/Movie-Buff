@@ -49,9 +49,14 @@ class MoviesCurrentAdapter(
         }
     }
 
+    private var onItemClickListener: ((Result) -> Unit)? = null
+    fun setOnItemClickListener(listener: (Result) -> Unit) {
+        onItemClickListener = listener
+    }
 
     inner class CurrentViewHolder(private val binding: ItemMovieCurrentBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
 
         fun bind(movie: Result) {
 
@@ -63,6 +68,12 @@ class MoviesCurrentAdapter(
                     .centerCrop()
                     .error(R.drawable.movie_place_holder)
                     .into(imageViewCurrentMovie)
+
+                imageViewCurrentMovie.setOnClickListener {
+                    onItemClickListener?.let { click ->
+                        click(movie)
+                    }
+                }
             }
         }
 

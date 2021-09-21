@@ -1,12 +1,11 @@
 package com.ctrlaccess.moviebuff.ui.fragment1
 
-import android.util.Log
-import androidx.paging.Pager
-import androidx.lifecycle.*
-import androidx.paging.PagingData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.ctrlaccess.moviebuff.data.model.MoviesCurrent
-import com.ctrlaccess.moviebuff.data.model.Result
 import com.ctrlaccess.moviebuff.repo.MoviesRepo
 import com.ctrlaccess.moviebuff.util.Event
 import com.ctrlaccess.moviebuff.util.Resource

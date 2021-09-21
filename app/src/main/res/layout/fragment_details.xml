@@ -1,8 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.fragment2.FragmentDetails">
+
+    <ImageView
+        android:id="@+id/imageView_movie_detail_poster"
+        android:layout_width="200dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/movie_place_holder"
+        android:contentDescription="Movie poster" />
+
+
+    <TextView
+        android:id="@+id/textView_movie_details_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_movie_detail_poster"
+        tools:text="Movie title" />
+
+    <TextView
+        android:id="@+id/textView_movie_details_release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_movie_details_title"
+        tools:text="Movie release date" />
+
+    <ScrollView
+        android:id="@+id/scrollView_movie_details"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_movie_details_release_date">
+
+
+        <TextView
+            android:id="@+id/textView_movie_details_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            tools:text="Movie overview" />
+
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

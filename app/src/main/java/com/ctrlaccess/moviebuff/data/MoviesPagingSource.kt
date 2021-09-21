@@ -1,6 +1,5 @@
 package com.ctrlaccess.moviebuff.data
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.ctrlaccess.moviebuff.data.model.Result

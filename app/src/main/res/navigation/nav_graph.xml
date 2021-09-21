@@ -17,5 +17,9 @@
         android:id="@+id/fragmentDetails2"
         android:name="com.ctrlaccess.moviebuff.ui.fragment2.FragmentDetails"
         android:label="Movie Details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="movie"
+            app:argType="com.ctrlaccess.moviebuff.data.model.Result" />
+    </fragment>
 </navigation>

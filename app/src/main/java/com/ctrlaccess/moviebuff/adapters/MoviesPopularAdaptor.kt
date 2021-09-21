@@ -25,6 +25,7 @@ class MoviesPopularAdaptor(
         }
 ) : PagingDataAdapter<Result, MoviesPopularAdaptor.MoviesViewHolder>(diffcallback) {
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val binding =
             ItemMoviePopularBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -33,8 +34,8 @@ class MoviesPopularAdaptor(
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val item = getItem(position)
-        item?.let { item ->
-            holder.bind(item)
+        item?.let {
+            holder.bind(it)
         }
     }
 

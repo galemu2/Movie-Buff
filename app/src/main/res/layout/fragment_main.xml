@@ -6,24 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment1.FragmentMain">
 
-    <!--    <ProgressBar
-            android:id="@+id/progressBar_ui_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone"
-            tools:visibility="visible" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/fab_ui_not_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/progressBar_ui_loading"
-            android:layout_centerInParent="true"
-            android:text="@string/reload"
-            android:visibility="gone"
-            app:icon="@drawable/ic_reload"
-            tools:visibility="visible" />-->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_ui_not_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_centerInParent="true"
+        android:text="@string/reload"
+        android:visibility="gone"
+        app:icon="@drawable/ic_reload"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container2"

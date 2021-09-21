@@ -3,6 +3,7 @@ package com.ctrlaccess.moviebuff.ui.fragment1
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -40,21 +41,103 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
         moviesPopularAdaptor = setupPopularMovesAdapter() // paging adapter
 
         viewModel.getCurrentMovies()
+        observeCurrentMovies()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.popularMovies.collectLatest { pagingData ->
+                moviesPopularAdaptor.submitData(pagingData)
+            }
+        }
+
+        popularMoviesLoadState()
+
+        binding.fabUiNotLoading.setOnClickListener {
+            viewModel.getCurrentMovies()
+            moviesPopularAdaptor.retry()
+        }
+
+        ovserveErrors()
+    }
+
+    private fun popularMoviesLoadState() {
+        moviesPopularAdaptor.addLoadStateListener { loadState ->
+            binding.apply {
+
+                container1.isVisible = true
+                val currentState = loadState.source.refresh
+
+                viewModel.moviePopularError(currentState is LoadState.Error)
+                when (currentState) {
+                    is LoadState.Loading -> {
+
+                        progressBarMoviesPopular.visibility = View.VISIBLE
+                        textViewMoviesPopular.visibility = View.GONE
+                        recyclerViewMoviesPopular.visibility = View.GONE
+
+                        viewModel.moviePopularError(false)
+                    }
+                    is LoadState.NotLoading -> { // success
+                        container1.visibility = View.VISIBLE
+                        textViewMoviesPopular.visibility = View.VISIBLE
+                        recyclerViewMoviesPopular.visibility = View.VISIBLE
+                        progressBarMoviesPopular.visibility = View.GONE
+                        viewModel.moviePopularError(false)
+
+                    }
+                    is LoadState.Error -> {
+                        container1.visibility = View.GONE
+                        progressBarMoviesPopular.visibility = View.GONE
+                        viewModel.moviePopularError(true)
+                    }
+                }
+
+            }
+        }
+    }
+
+    private fun ovserveErrors() {
+        viewModel.moviePopularError.observe(viewLifecycleOwner, Observer { popularMovieError ->
+            val currentMovieError = viewModel.movieCurrentError.value ?: false
+            binding.fabUiNotLoading.isVisible = popularMovieError && currentMovieError
+        })
+
+        viewModel.movieCurrentError.observe(viewLifecycleOwner, Observer { currentMovieError ->
+            val popularMovieError = viewModel.moviePopularError.value ?: false
+            binding.fabUiNotLoading.isVisible = popularMovieError && currentMovieError
+        })
+    }
+
+    private fun observeCurrentMovies() {
         viewModel.currentMovies.observe(viewLifecycleOwner, Observer {
-            it?.getContentIfNotHandled()?.let { result ->
+            it.getContentIfNotHandled()?.let { result ->
                 when (result.status) {
                     Status.SUCCESS -> {
                         binding.textViewMoviesCurrent.visibility = View.VISIBLE
                         binding.progressBarMoviesCurrent.visibility = View.GONE
                         moviesCurrentAdapter.submitCurrentMovies(result.data?.results)
+                        viewModel.movieCurrentError(false)
                     }
                     Status.LOADING -> {
                         binding.textViewMoviesCurrent.visibility = View.GONE
                         binding.progressBarMoviesCurrent.visibility = View.VISIBLE
+                        viewModel.movieCurrentError(false)
                     }
                     Status.ERROR -> {
                         binding.textViewMoviesCurrent.visibility = View.GONE
                         binding.progressBarMoviesCurrent.visibility = View.GONE
+                        viewModel.movieCurrentError(true)
+                        Snackbar.make(
+                            requireView().rootView,
+                            result.message ?: "Unknown error!!",
+                            Snackbar.LENGTH_LONG
+                        )
+                            .show()
+                    }
+                    else -> {
+
+                        binding.textViewMoviesCurrent.visibility = View.GONE
+                        binding.progressBarMoviesCurrent.visibility = View.GONE
+                        viewModel.movieCurrentError(true)
                         Snackbar.make(
                             requireView().rootView,
                             result.message ?: "Unknown error!!",
@@ -65,43 +148,6 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
                 }
             }
         })
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.popularMovies.collectLatest { pagingData ->
-                moviesPopularAdaptor.submitData(pagingData)
-            }
-        }
-
-        moviesPopularAdaptor.addLoadStateListener { loadState ->
-            binding.apply {
-
-                container1.visibility = View.VISIBLE
-                val currentState = loadState.source.refresh
-                when (currentState) {
-                    is LoadState.Loading -> {
-
-                        progressBarMoviesPopular.visibility = View.VISIBLE
-                        textViewMoviesPopular.visibility = View.GONE
-                        recyclerViewMoviesPopular.visibility = View.GONE
-                        Log.d(TAG, " >>> Loading ... ")
-                    }
-                    is LoadState.NotLoading -> { // success
-
-                        container1.visibility = View.VISIBLE
-                        textViewMoviesPopular.visibility = View.VISIBLE
-                        recyclerViewMoviesPopular.visibility = View.VISIBLE
-                        progressBarMoviesPopular.visibility = View.GONE
-                        Log.d(TAG, ">> Success !!! ")
-                    }
-                    is LoadState.Error -> {
-                        container1.visibility = View.GONE
-                        progressBarMoviesPopular.visibility = View.GONE
-                        Log.d(TAG, ">> Error ?!?!?")
-                    }
-                }
-
-            }
-        }
     }
 
     // setup paging adapter
@@ -113,6 +159,7 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
                 header = MoviesLoadStateAdapter { adaptor.retry() },
                 footer = MoviesLoadStateAdapter { adaptor.retry() }
             )
+
             // fabUiNotLoading.setOnClickListener { adaptor.retry() }
         }
         return adaptor
@@ -124,6 +171,7 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
             recyclerViewMoviesCurrent.setHasFixedSize(true)
             recyclerViewMoviesCurrent.adapter = adapter
         }
+
         return adapter
     }
 

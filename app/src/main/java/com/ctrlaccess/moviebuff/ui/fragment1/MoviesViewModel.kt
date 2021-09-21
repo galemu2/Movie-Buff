@@ -1,5 +1,6 @@
 package com.ctrlaccess.moviebuff.ui.fragment1
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.lifecycle.*
 import androidx.paging.PagingData
@@ -18,7 +19,20 @@ class MoviesViewModel @Inject constructor(
     private val repo: MoviesRepo
 ) : ViewModel() {
 
-    private val CURRENT_QUERY: String = "current query"
+    private val TAG: String = "ViewModel"
+    private val _movieCurrentError = MutableLiveData(false)
+    val movieCurrentError: LiveData<Boolean>
+        get() = _movieCurrentError
+
+
+    private val _moviePopularError = MutableLiveData(false)
+    val moviePopularError: LiveData<Boolean>
+        get() = _moviePopularError
+
+    private val _moviesError = MutableLiveData<List<Boolean>>(listOf(false, false))
+    val moviesError: LiveData<List<Boolean>>
+        get() = _moviesError
+
 
     private val _currentMovies = MutableLiveData<Event<Resource<MoviesCurrent>>>()
     val currentMovies: LiveData<Event<Resource<MoviesCurrent>>>
@@ -32,6 +46,14 @@ class MoviesViewModel @Inject constructor(
             val response = repo.getCurrentMovies()
             _currentMovies.value = Event(response)
         }
+    }
+
+    fun movieCurrentError(boolean: Boolean) {
+         _movieCurrentError.value = boolean
+    }
+
+    fun moviePopularError(boolean: Boolean) {
+        _moviePopularError.value = boolean
     }
 
 }

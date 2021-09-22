@@ -8,11 +8,11 @@ import com.ctrlaccess.moviebuff.data.remote.MoviesApi
 import com.ctrlaccess.moviebuff.util.Resource
 import javax.inject.Inject
 
-class MoviesRepo @Inject constructor(private val moviesApi: MoviesApi) {
+class MoviesRepo @Inject constructor(private val moviesApi: MoviesApi) : MoviesRepoInterface {
 
    // suspend fun getCurrentMovies() = moviesApi.getCurrentMovies()
 
-    suspend fun getCurrentMovies(): Resource<MoviesCurrent>{
+    override suspend fun getCurrentMovies(): Resource<MoviesCurrent>{
         return try {
             val response = moviesApi.getCurrentMovies()
             if (response.isSuccessful   ){
@@ -28,7 +28,7 @@ class MoviesRepo @Inject constructor(private val moviesApi: MoviesApi) {
     }
 
 
-    fun getPopularMovies() = Pager(
+    override fun getPopularMovies() = Pager(
         config = PagingConfig(pageSize = 20),
         pagingSourceFactory = {
             MoviesPagingSource(moviesApi)

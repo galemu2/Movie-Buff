@@ -6,7 +6,7 @@
     app:startDestination="@id/fragmentMain">
     <fragment
         android:id="@+id/fragmentMain"
-        android:name="com.ctrlaccess.moviebuff.ui.fragment1.FragmentMain"
+        android:name="com.ctrlaccess.moviebuff.ui.fragments.FragmentMain"
         android:label="Movies"
         tools:layout="@layout/fragment_main" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentDetails2"
-        android:name="com.ctrlaccess.moviebuff.ui.fragment2.FragmentDetails"
+        android:name="com.ctrlaccess.moviebuff.ui.fragments.FragmentDetails"
         android:label="Movie Details"
         tools:layout="@layout/fragment_details" >
         <argument

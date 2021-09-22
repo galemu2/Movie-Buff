@@ -1,4 +1,4 @@
-package com.ctrlaccess.moviebuff.ui.fragment1
+package com.ctrlaccess.moviebuff.ui.fragments
 
 import android.os.Bundle
 import android.view.View
@@ -69,7 +69,6 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
     private fun popularMoviesLoadState() {
         moviesPopularAdaptor.addLoadStateListener { loadState ->
             binding.apply {
-
                 container1.isVisible = true
                 val currentState = loadState.source.refresh
 

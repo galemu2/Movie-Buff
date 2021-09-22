@@ -1,4 +1,4 @@
-package com.ctrlaccess.moviebuff.ui.fragment2
+package com.ctrlaccess.moviebuff.ui.fragments
 
 import android.os.Bundle
 import android.view.View

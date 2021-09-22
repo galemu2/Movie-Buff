@@ -25,6 +25,10 @@ class MoviesPopularAdaptor(
         }
 ) : PagingDataAdapter<Result, MoviesPopularAdaptor.MoviesViewHolder>(diffcallback) {
 
+    private var onItemClickListener: ((Result) -> Unit)? = null
+    fun setOnItemClickListener(listener: (Result) -> Unit) {
+        onItemClickListener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val binding =
@@ -41,6 +45,20 @@ class MoviesPopularAdaptor(
 
     inner class MoviesViewHolder(private val binding: ItemMoviePopularBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener { view ->
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    item?.let { result ->
+                        onItemClickListener?.let { click ->
+                            click(result)
+                        }
+                    }
+                }
+            }
+        }
 
         fun bind(item: Result) {
             binding.apply {

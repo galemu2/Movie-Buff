@@ -39,14 +39,14 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
 
         moviesCurrentAdapter = setupCurrentMoviesAdapter()
         moviesCurrentAdapter.setOnItemClickListener { result ->
-            findNavController().navigate(
-                FragmentMainDirections.actionFragmentMainToFragmentDetails2(
-                    result
-                )
-            )
+            val action = FragmentMainDirections.actionFragmentMainToFragmentDetails2(result)
+            findNavController().navigate(action)
         }
         moviesPopularAdaptor = setupPopularMovesAdapter() // paging adapter
-
+        moviesPopularAdaptor.setOnItemClickListener { result ->
+            val action = FragmentMainDirections.actionFragmentMainToFragmentDetails2(result)
+            findNavController().navigate(action)
+        }
         viewModel.getCurrentMovies()
         observeCurrentMovies()
 
@@ -130,18 +130,6 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
                         viewModel.movieCurrentError(false)
                     }
                     Status.ERROR -> {
-                        binding.textViewMoviesCurrent.visibility = View.GONE
-                        binding.progressBarMoviesCurrent.visibility = View.GONE
-                        viewModel.movieCurrentError(true)
-                        Snackbar.make(
-                            requireView().rootView,
-                            result.message ?: "Unknown error!!",
-                            Snackbar.LENGTH_LONG
-                        )
-                            .show()
-                    }
-                    else -> {
-
                         binding.textViewMoviesCurrent.visibility = View.GONE
                         binding.progressBarMoviesCurrent.visibility = View.GONE
                         viewModel.movieCurrentError(true)

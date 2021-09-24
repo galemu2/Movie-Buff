@@ -2,6 +2,7 @@ package com.ctrlaccess.moviebuff.ui.fragments
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ctrlaccess.moviebuff.MainCoroutineRule
+import com.ctrlaccess.moviebuff.data.model.MoviesCurrent
 import com.ctrlaccess.moviebuff.getOrAwaitValueTest
 import com.ctrlaccess.moviebuff.repo.FakeMoviesRepo
 import com.ctrlaccess.moviebuff.repo.MoviesRepoInterface
@@ -24,7 +25,7 @@ class MoviesViewModelTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var viewModel: MoviesViewModel
-    private lateinit var repo: MoviesRepoInterface
+    private lateinit var repo: FakeMoviesRepo
     @Before
     fun setUp() {
         repo = FakeMoviesRepo()
@@ -40,13 +41,17 @@ class MoviesViewModelTest {
     fun `get current movies success`() {
         viewModel.getCurrentMovies()
         val value = viewModel.currentMovies.getOrAwaitValueTest()
-        val status = value.getContentIfNotHandled()?.status ?: Resource.error("some error", null)
+        val status = value.getContentIfNotHandled()?.status ?: Status.ERROR
         assertThat(status).isEqualTo(Status.SUCCESS)
     }
 
     @Test
     fun `get current movies network error`(){
-
+        repo.setShouldReturnNetworkError(true)
+        viewModel.getCurrentMovies()
+        val value = viewModel.currentMovies.getOrAwaitValueTest()
+        val status = value.getContentIfNotHandled()?.status ?: Status.SUCCESS
+        assertThat(status).isEqualTo(Status.ERROR)
 
     }
 }

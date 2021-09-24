@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.ctrlaccess.moviebuff.data.model.MoviesCurrent
 import com.ctrlaccess.moviebuff.repo.MoviesRepo
+import com.ctrlaccess.moviebuff.repo.MoviesRepoInterface
 import com.ctrlaccess.moviebuff.util.Event
 import com.ctrlaccess.moviebuff.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
-    private val repo: MoviesRepo
+    private val repo: MoviesRepoInterface
 ) : ViewModel() {
 
     private val TAG: String = "ViewModel"
@@ -31,7 +32,7 @@ class MoviesViewModel @Inject constructor(
     val currentMovies: LiveData<Event<Resource<MoviesCurrent>>>
         get() = _currentMovies
 
-    val popularMovies = repo.getPopularMovies().cachedIn(viewModelScope)
+    val popularMovies = repo.getPopularMovies()?.cachedIn(viewModelScope)
 
     fun getCurrentMovies() {
         _currentMovies.value = Event(Resource.loading(null))

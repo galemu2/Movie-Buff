@@ -1,6 +1,8 @@
 package com.ctrlaccess.moviebuff.di
 
 import com.ctrlaccess.moviebuff.data.remote.MoviesApi
+import com.ctrlaccess.moviebuff.repo.MoviesRepo
+import com.ctrlaccess.moviebuff.repo.MoviesRepoInterface
 import com.ctrlaccess.moviebuff.util.UtilObjects.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -24,4 +26,10 @@ class AppModule {
     @Provides
     @Singleton
     fun provideMoviesApi(retrofit: Retrofit) = retrofit.create(MoviesApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideMoviesRepositoryInterface(
+        api:MoviesApi
+    )  = MoviesRepo(api) as MoviesRepoInterface
 }

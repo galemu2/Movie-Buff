@@ -17,9 +17,12 @@ class UtilObjectsTest {
     @Before
     fun setUp() {
         result = Result(
-            false, "", emptyList(), 1, "en-US", "Hot Movie",
-            "Very hot movie", 4.4, "poster_path", "09/07/2021", "Hot Movie", false,
-            4.4f, 10000
+            genre_ids = listOf(1, 2),
+            overview = "overview",
+            poster_path = "poster_part",
+            release_date = "yesterday",
+            title = "best movie",
+            vote_average = 5.0f
         )
     }
 

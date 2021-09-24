@@ -51,7 +51,7 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
         observeCurrentMovies()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.popularMovies.collectLatest { pagingData ->
+            viewModel.popularMovies?.collectLatest { pagingData ->
                 moviesPopularAdaptor.submitData(pagingData)
             }
         }

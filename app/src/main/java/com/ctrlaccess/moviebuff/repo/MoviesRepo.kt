@@ -10,19 +10,19 @@ import javax.inject.Inject
 
 class MoviesRepo @Inject constructor(private val moviesApi: MoviesApi) : MoviesRepoInterface {
 
-   // suspend fun getCurrentMovies() = moviesApi.getCurrentMovies()
+    // suspend fun getCurrentMovies() = moviesApi.getCurrentMovies()
 
-    override suspend fun getCurrentMovies(): Resource<MoviesCurrent>{
+    override suspend fun getCurrentMovies(): Resource<MoviesCurrent> {
         return try {
             val response = moviesApi.getCurrentMovies()
-            if (response.isSuccessful   ){
+            if (response.isSuccessful) {
                 response.body()?.let {
                     return@let Resource.success(it)
-                }?: return Resource.error("Unknown error", null)
-            } else{
+                } ?: return Resource.error("Unknown error", null)
+            } else {
                 return Resource.error("Unknown error", null)
             }
-        } catch (e:Exception){
+        } catch (e: Exception) {
             return Resource.error("Could not reach the server. Check internet connection", null)
         }
     }

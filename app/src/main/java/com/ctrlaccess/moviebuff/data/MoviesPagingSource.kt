@@ -18,7 +18,7 @@ class MoviesPagingSource(private val moviesApi: MoviesApi) : PagingSource<Int, R
             // returned on success
             LoadResult.Page(
                 data = response.results,
-                prevKey = if (pageNumber == STARTING_PAGE) null else pageNumber - 1,
+                prevKey = if (pageNumber <= STARTING_PAGE) null else pageNumber - 1,
                 nextKey = if (response.results.isNullOrEmpty()) null else pageNumber + 1
             )
         } catch (e: Throwable) {

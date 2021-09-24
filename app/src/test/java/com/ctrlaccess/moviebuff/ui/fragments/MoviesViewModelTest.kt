@@ -25,8 +25,8 @@ class MoviesViewModelTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-//    @ExperimentalCoroutinesApi
-//    val testDispatcher = TestCoroutineDispatcher()
+    // @ExperimentalCoroutinesApi
+    // val testDispatcher = TestCoroutineDispatcher()
 
     private lateinit var viewModel: MoviesViewModel
     private lateinit var repo: FakeMoviesRepo
@@ -35,13 +35,13 @@ class MoviesViewModelTest {
     fun setUp() {
         repo = FakeMoviesRepo()
         viewModel = MoviesViewModel(repo)
-//        Dispatchers.setMain(testDispatcher)
+        // Dispatchers.setMain(testDispatcher)
     }
 
     @After
     fun tearDown() {
-//        Dispatchers.resetMain()
-//        testDispatcher.cleanupTestCoroutines()
+        // Dispatchers.resetMain()
+        // testDispatcher.cleanupTestCoroutines()
     }
 
     @Test

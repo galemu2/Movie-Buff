@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.ctrlaccess.moviebuff.data.model.MoviesCurrent
-import com.ctrlaccess.moviebuff.repo.MoviesRepo
-import com.ctrlaccess.moviebuff.repo.MoviesRepoInterface
+import com.ctrlaccess.moviebuff.repo.RepositoryInterface
 import com.ctrlaccess.moviebuff.util.Event
 import com.ctrlaccess.moviebuff.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
-    private val repo: MoviesRepoInterface
+    private val repo: RepositoryInterface
 ) : ViewModel() {
 
     private val TAG: String = "ViewModel"

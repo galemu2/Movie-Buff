@@ -6,7 +6,7 @@ import com.ctrlaccess.moviebuff.data.model.Result
 import com.ctrlaccess.moviebuff.util.Resource
 import kotlinx.coroutines.flow.Flow
 
-interface MoviesRepoInterface {
+interface RepositoryInterface {
 
     suspend fun getCurrentMovies(): Resource<MoviesCurrent>
 

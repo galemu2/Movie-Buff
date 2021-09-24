@@ -7,7 +7,7 @@ import com.ctrlaccess.moviebuff.util.Resource
 import com.ctrlaccess.moviebuff.util.Status
 import kotlinx.coroutines.flow.Flow
 
-class FakeMoviesRepo : MoviesRepoInterface {
+class FakeMoviesRepo : RepositoryInterface {
 
     val result = Result(
         genre_ids = listOf(1, 2),

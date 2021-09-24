@@ -2,7 +2,7 @@ package com.ctrlaccess.moviebuff.di
 
 import com.ctrlaccess.moviebuff.data.remote.MoviesApi
 import com.ctrlaccess.moviebuff.repo.MoviesRepo
-import com.ctrlaccess.moviebuff.repo.MoviesRepoInterface
+import com.ctrlaccess.moviebuff.repo.RepositoryInterface
 import com.ctrlaccess.moviebuff.util.UtilObjects.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -31,5 +31,5 @@ class AppModule {
     @Singleton
     fun provideMoviesRepositoryInterface(
         api:MoviesApi
-    )  = MoviesRepo(api) as MoviesRepoInterface
+    )  = MoviesRepo(api) as RepositoryInterface
 }

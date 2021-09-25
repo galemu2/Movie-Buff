@@ -27,7 +27,6 @@ class MoviesRepo @Inject constructor(private val moviesApi: MoviesApi) : Reposit
         }
     }
 
-
     override fun getPopularMovies() = Pager(
         config = PagingConfig(pageSize = 20),
         pagingSourceFactory = {

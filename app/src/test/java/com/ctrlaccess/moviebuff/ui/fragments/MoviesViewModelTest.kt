@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ctrlaccess.moviebuff.MainCoroutineRule
 import com.ctrlaccess.moviebuff.getOrAwaitValueTest
 import com.ctrlaccess.moviebuff.repo.FakeMoviesRepo
+import com.ctrlaccess.moviebuff.ui.MoviesViewModel
 import com.ctrlaccess.moviebuff.util.Status
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,4 +1,4 @@
-package com.ctrlaccess.moviebuff.ui.fragments
+package com.ctrlaccess.moviebuff.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -14,6 +14,7 @@ import com.ctrlaccess.moviebuff.adapters.MoviesCurrentAdapter
 import com.ctrlaccess.moviebuff.adapters.MoviesLoadStateAdapter
 import com.ctrlaccess.moviebuff.adapters.MoviesPopularAdaptor
 import com.ctrlaccess.moviebuff.databinding.FragmentMainBinding
+import com.ctrlaccess.moviebuff.ui.MoviesViewModel
 import com.ctrlaccess.moviebuff.util.Status
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

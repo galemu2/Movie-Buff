@@ -6,11 +6,7 @@ import com.ctrlaccess.moviebuff.getOrAwaitValueTest
 import com.ctrlaccess.moviebuff.repo.FakeMoviesRepo
 import com.ctrlaccess.moviebuff.util.Status
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -25,8 +21,8 @@ class MoviesViewModelTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-//    @ExperimentalCoroutinesApi
-//    val testDispatcher = TestCoroutineDispatcher()
+    // @ExperimentalCoroutinesApi
+    // val testDispatcher = TestCoroutineDispatcher()
 
     private lateinit var viewModel: MoviesViewModel
     private lateinit var repo: FakeMoviesRepo
@@ -35,13 +31,13 @@ class MoviesViewModelTest {
     fun setUp() {
         repo = FakeMoviesRepo()
         viewModel = MoviesViewModel(repo)
-//        Dispatchers.setMain(testDispatcher)
+        // Dispatchers.setMain(testDispatcher)
     }
 
     @After
     fun tearDown() {
-//        Dispatchers.resetMain()
-//        testDispatcher.cleanupTestCoroutines()
+        // Dispatchers.resetMain()
+        // testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
@@ -61,5 +57,30 @@ class MoviesViewModelTest {
         assertThat(status).isEqualTo(Status.ERROR)
     }
 
+
+    //TODO having difficulty testing for 'Flow<PagingData<Result>>' response
+    @Test
+    fun `get popular movies success`(){
+
+    }
+
+    @Test
+    fun `get popular movies error`(){
+
+    }
+
+    @Test
+    fun `movies Current returns error`(){
+        viewModel.movieCurrentError(true)
+        val output  = viewModel.movieCurrentError.getOrAwaitValueTest()
+        assertThat(output).isTrue()
+    }
+
+    @Test
+    fun `movies Current returns success`(){
+        viewModel.movieCurrentError(false)
+        val output = viewModel.movieCurrentError.getOrAwaitValueTest()
+        assertThat(output).isFalse()
+    }
 
 }

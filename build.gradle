@@ -10,6 +10,8 @@ buildscript {
         navigation_version = "2.3.5"
         nav_version = "2.3.5"
         hilt_testing_version="2.37"
+        coroutine_test_version="1.5.1"
+        espresso_version="3.3.0"
     }
 
     repositories {

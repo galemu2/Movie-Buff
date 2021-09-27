@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import com.ctrlaccess.moviebuff.ui.HiltTestActivity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /*

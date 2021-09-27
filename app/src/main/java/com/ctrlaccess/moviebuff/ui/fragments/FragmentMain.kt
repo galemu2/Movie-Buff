@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -26,6 +27,7 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
 
     private val TAG = "FragmentMain"
     private val viewModel by viewModels<MoviesViewModel>()
+    //private lateinit var viewModel:MoviesViewModel
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
@@ -37,6 +39,7 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMainBinding.bind(view)
+        //viewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
 
         moviesCurrentAdapter = setupCurrentMoviesAdapter()
         moviesCurrentAdapter.setOnItemClickListener { result ->

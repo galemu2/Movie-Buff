@@ -1,4 +1,4 @@
-package com.ctrlaccess.moviebuff
+package com.ctrlaccess.moviebuff.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint

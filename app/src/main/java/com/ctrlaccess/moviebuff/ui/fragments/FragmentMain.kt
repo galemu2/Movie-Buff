@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.bumptech.glide.RequestManager
 import com.ctrlaccess.moviebuff.R
 import com.ctrlaccess.moviebuff.adapters.MoviesCurrentAdapter
 import com.ctrlaccess.moviebuff.adapters.MoviesLoadStateAdapter
@@ -22,11 +23,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class FragmentMain : Fragment(R.layout.fragment_main) {
+class FragmentMain(
+    private val glide: RequestManager
+) :
+    Fragment(R.layout.fragment_main) {
 
     private val TAG = "FragmentMain"
     private val viewModel by viewModels<MoviesViewModel>()
-    //private lateinit var viewModel:MoviesViewModel
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
@@ -38,7 +41,6 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMainBinding.bind(view)
-        //viewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
 
         moviesCurrentAdapter = setupCurrentMoviesAdapter()
         moviesCurrentAdapter.setOnItemClickListener { result ->
@@ -53,20 +55,18 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
         viewModel.getCurrentMovies()
         observeCurrentMovies()
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.popularMovies?.collectLatest { pagingData ->
-                moviesPopularAdaptor.submitData(pagingData)
-            }
-        }
+        viewModel.getPopularMovies()
+        observePopularMovies()
+
 
         popularMoviesLoadState()
+
+        observeErrors()
 
         binding.fabUiNotLoading.setOnClickListener {
             viewModel.getCurrentMovies()
             moviesPopularAdaptor.retry()
         }
-
-        observeErrors()
     }
 
     private fun popularMoviesLoadState() {
@@ -99,7 +99,6 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
                         viewModel.moviePopularError(true)
                     }
                 }
-
             }
         }
     }
@@ -114,6 +113,33 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
             val popularMovieError = viewModel.moviePopularError.value ?: false
             binding.fabUiNotLoading.isVisible = popularMovieError && currentMovieError
         })
+    }
+
+    private fun observePopularMovies(){
+        viewModel.popularMovies.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { result ->
+                when (result.status) {
+                    Status.SUCCESS -> {
+                        lifecycleScope.launch {
+                            result.data?.collectLatest { pagingData ->
+                                moviesPopularAdaptor.submitData(pagingData)
+                            }
+                        }
+
+                    }
+                    Status.LOADING -> {
+                    }
+                    Status.ERROR -> {
+                    }
+                }
+
+            }
+        })
+        /*
+        viewModel.popularMovies.collectLatest { pagingData ->
+            moviesPopularAdaptor.submitData(pagingData)
+        }
+        */
     }
 
     private fun observeCurrentMovies() {
@@ -149,7 +175,8 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
 
     // setup paging adapter
     private fun setupPopularMovesAdapter(): MoviesPopularAdaptor {
-        val adaptor = MoviesPopularAdaptor()
+
+        val adaptor = MoviesPopularAdaptor(glide)
         binding.apply {
             recyclerViewMoviesPopular.setHasFixedSize(true)
             recyclerViewMoviesPopular.adapter = adaptor.withLoadStateHeaderAndFooter(
@@ -157,14 +184,15 @@ class FragmentMain : Fragment(R.layout.fragment_main) {
                 footer = MoviesLoadStateAdapter { adaptor.retry() }
             )
 
-            // fabUiNotLoading.setOnClickListener { adaptor.retry() }
         }
         return adaptor
     }
 
     private fun setupCurrentMoviesAdapter(): MoviesCurrentAdapter {
-        val adapter = MoviesCurrentAdapter()
+
+        val adapter = MoviesCurrentAdapter(glide)
         binding.apply {
+
             recyclerViewMoviesCurrent.setHasFixedSize(true)
             recyclerViewMoviesCurrent.adapter = adapter
         }

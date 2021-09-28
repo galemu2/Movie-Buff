@@ -1,17 +1,19 @@
 package com.ctrlaccess.moviebuff.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.ctrlaccess.moviebuff.R
+import com.bumptech.glide.RequestManager
 import com.ctrlaccess.moviebuff.data.model.Result
 import com.ctrlaccess.moviebuff.databinding.ItemMoviePopularBinding
 import com.ctrlaccess.moviebuff.util.UtilObjects
+import javax.inject.Inject
 
-class MoviesPopularAdaptor(
+class MoviesPopularAdaptor @Inject constructor(
+    private val glide: RequestManager,
     diffcallback: DiffUtil.ItemCallback<Result> =
         object : DiffUtil.ItemCallback<Result>() {
 
@@ -29,6 +31,8 @@ class MoviesPopularAdaptor(
     fun setOnItemClickListener(listener: (Result) -> Unit) {
         onItemClickListener = listener
     }
+
+    private val TAG = "Movie"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val binding =
@@ -61,14 +65,12 @@ class MoviesPopularAdaptor(
         }
 
         fun bind(item: Result) {
+            Log.d(TAG, "<<< Popular Movie: ${item.id ?: -1}")
             binding.apply {
                 val url = UtilObjects.getImageUrl(item)
 
-                Glide.with(itemView)
-                    .load(url)
-                    .centerCrop()
-                    .error(R.drawable.movie_place_holder)
-                    .into(imageView)
+                glide.load(url).into(imageView)
+
 
                 textPopularMovieTitle.text = item.title
                 textPopularMovieReleaseDate.text = item.release_date

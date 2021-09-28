@@ -4,12 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.ctrlaccess.moviebuff.data.model.MoviesCurrent
+import com.ctrlaccess.moviebuff.data.model.Result
 import com.ctrlaccess.moviebuff.repo.RepositoryInterface
 import com.ctrlaccess.moviebuff.util.Event
 import com.ctrlaccess.moviebuff.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,8 +34,22 @@ class MoviesViewModel @Inject constructor(
     val currentMovies: LiveData<Event<Resource<MoviesCurrent>>>
         get() = _currentMovies
 
-    val popularMovies = repo.getPopularMovies()?.cachedIn(viewModelScope)
+    private val _popularMovies = MutableLiveData<Event<Resource<Flow<PagingData<Result>>>>>()
+    val popularMovies: LiveData<Event<Resource<Flow<PagingData<Result>>>>>
+        get() = _popularMovies
 
+
+    //val popularMovies = repo.getPopularMovies()?.cachedIn(viewModelScope)
+    fun getPopularMovies(){
+        _popularMovies.value = Event(Resource.loading(null))
+        viewModelScope.launch {
+            val response = repo.getPopularMovies()
+            response?.let {
+                _popularMovies.value = Event((Resource.success(it.cachedIn(viewModelScope))))
+            }
+            //_popularMovies.value = Event()
+        }
+    }
     fun getCurrentMovies() {
         _currentMovies.value = Event(Resource.loading(null))
         viewModelScope.launch {

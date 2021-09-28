@@ -1,5 +1,9 @@
 package com.ctrlaccess.moviebuff.di
 
+import android.content.Context
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.ctrlaccess.moviebuff.R
 import com.ctrlaccess.moviebuff.data.remote.MoviesApi
 import com.ctrlaccess.moviebuff.repo.MoviesRepo
 import com.ctrlaccess.moviebuff.repo.RepositoryInterface
@@ -7,6 +11,7 @@ import com.ctrlaccess.moviebuff.util.UtilObjects.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -25,11 +30,22 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideMoviesApi(retrofit: Retrofit) = retrofit.create(MoviesApi::class.java)
+    fun provideMoviesApi(retrofit: Retrofit): MoviesApi = retrofit.create(MoviesApi::class.java)
 
     @Provides
     @Singleton
     fun provideMoviesRepositoryInterface(
-        api:MoviesApi
-    )  = MoviesRepo(api) as RepositoryInterface
+        api: MoviesApi
+    ) = MoviesRepo(api) as RepositoryInterface
+
+    @Provides
+    @Singleton
+    fun provideGlideInstance(
+        @ApplicationContext context: Context
+    ) = Glide.with(context)
+        .setDefaultRequestOptions(
+            RequestOptions()
+                .placeholder(R.drawable.movie_place_holder)
+                .error(R.drawable.movie_place_holder)
+        )
 }

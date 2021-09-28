@@ -11,18 +11,25 @@ class MoviesPagingSource(private val moviesApi: MoviesApi) : PagingSource<Int, R
     private val STARTING_PAGE = 1
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Result> {
-        return try {
+        try {
             val pageNumber = params.key ?: 1
             // query the api
             val response = moviesApi.getPopularMovies(pageNumber)
-            // returned on success
-            LoadResult.Page(
-                data = response.results,
-                prevKey = if (pageNumber == STARTING_PAGE) null else pageNumber - 1,
-                nextKey = if (response.results.isNullOrEmpty()) null else pageNumber + 1
-            )
+
+            if (response.isSuccessful) {
+               return response.body()?.let { moviePopular ->
+                    return@let LoadResult.Page(
+                        data = moviePopular.results,
+                        prevKey = if (pageNumber == STARTING_PAGE) null else pageNumber - 1,
+                        nextKey = if (moviePopular.results.isNullOrEmpty()) null else pageNumber + 1
+                    )
+                } ?: LoadResult.Error(Throwable("Unknown Error"))
+            } else {
+                return LoadResult.Error(Throwable("Unknown Error"))
+            }
+
         } catch (e: Throwable) {
-            LoadResult.Error(e)
+          return  LoadResult.Error(e)
         }
     }
 

@@ -8,9 +8,9 @@ import com.ctrlaccess.moviebuff.data.remote.MoviesApi
 import com.ctrlaccess.moviebuff.util.Resource
 import javax.inject.Inject
 
-class MoviesRepo @Inject constructor(private val moviesApi: MoviesApi) : RepositoryInterface {
-
-    // suspend fun getCurrentMovies() = moviesApi.getCurrentMovies()
+class MoviesRepo @Inject constructor(
+    private val moviesApi : MoviesApi
+) : RepositoryInterface {
 
     override suspend fun getCurrentMovies(): Resource<MoviesCurrent> {
         return try {

@@ -1,17 +1,19 @@
 package com.ctrlaccess.moviebuff.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.ctrlaccess.moviebuff.R
+import com.bumptech.glide.RequestManager
 import com.ctrlaccess.moviebuff.data.model.Result
 import com.ctrlaccess.moviebuff.databinding.ItemMovieCurrentBinding
 import com.ctrlaccess.moviebuff.util.UtilObjects.getImageUrl
+import javax.inject.Inject
 
-class MoviesCurrentAdapter(
+class MoviesCurrentAdapter @Inject constructor(
+    private val glide: RequestManager,
     diffCallback: DiffUtil.ItemCallback<Result> = object :
         DiffUtil.ItemCallback<Result>() {
         override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
@@ -26,7 +28,7 @@ class MoviesCurrentAdapter(
     RecyclerView.Adapter<MoviesCurrentAdapter.CurrentViewHolder>() {
 
     var differ = AsyncListDiffer<Result>(this, diffCallback)
-
+    private val TAG = "Movie"
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrentViewHolder {
         val binding = ItemMovieCurrentBinding.inflate(LayoutInflater.from(parent.context))
         return CurrentViewHolder(binding)
@@ -57,17 +59,12 @@ class MoviesCurrentAdapter(
     inner class CurrentViewHolder(private val binding: ItemMovieCurrentBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-
         fun bind(movie: Result) {
-
+            Log.d(TAG, " Current Movie: >>> ${movie.id ?: -1}")
             val url = getImageUrl(movie)
 
             binding.apply {
-                Glide.with(imageViewCurrentMovie)
-                    .load(url)
-                    .centerCrop()
-                    .error(R.drawable.movie_place_holder)
-                    .into(imageViewCurrentMovie)
+                glide.load(url).into(imageViewCurrentMovie)
 
                 imageViewCurrentMovie.setOnClickListener {
                     onItemClickListener?.let { click ->

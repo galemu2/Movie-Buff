@@ -65,7 +65,7 @@ class MoviesPopularAdaptor @Inject constructor(
         }
 
         fun bind(item: Result) {
-            Log.d(TAG, "<<< Popular Movie: ${item.id ?: -1}")
+            Log.d(TAG, "=== Popular Movie: ${item.id ?: -1}")
             binding.apply {
                 val url = UtilObjects.getImageUrl(item)
 

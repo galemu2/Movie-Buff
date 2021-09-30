@@ -15,6 +15,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @MediumTest
@@ -24,6 +25,8 @@ class FragmentDetailsTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
+    @Inject
+    lateinit var testFragmentFactory: TestMovieFragmentFactory
     /*
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -44,7 +47,8 @@ class FragmentDetailsTest {
         val bundle = FragmentDetailsArgs(movies).toBundle()
         launchFragmentInHiltContainer<FragmentDetails>(
             fragmentArgs = bundle,
-            themeResId = R.style.Theme_MovieBuff
+            themeResId = R.style.Theme_MovieBuff,
+            fragmentFactory = testFragmentFactory
         )
 
         onView(withId(R.id.textView_movie_details_release_date)).check(matches(isDisplayed()))

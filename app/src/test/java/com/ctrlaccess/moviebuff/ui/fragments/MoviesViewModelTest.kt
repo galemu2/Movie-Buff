@@ -84,4 +84,17 @@ class MoviesViewModelTest {
         assertThat(output).isFalse()
     }
 
+    @Test
+    fun `movies popular returns error`(){
+        viewModel.moviePopularError(true)
+        val out = viewModel.moviePopularError.getOrAwaitValueTest()
+        assertThat(out).isTrue()
+    }
+
+    @Test
+    fun `movies popular returns success`(){
+        viewModel.moviePopularError(false)
+        val out = viewModel.moviePopularError.getOrAwaitValueTest()
+        assertThat(out).isFalse()
+    }
 }

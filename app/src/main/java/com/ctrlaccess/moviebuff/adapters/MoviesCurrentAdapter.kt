@@ -45,7 +45,6 @@ class MoviesCurrentAdapter @Inject constructor(
     }
 
     fun submitCurrentMovies(moviesList: List<Result>?) {
-        differ.currentList.clear()
         moviesList?.let {
             differ.submitList(it)
         }
@@ -60,7 +59,7 @@ class MoviesCurrentAdapter @Inject constructor(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Result) {
-            Log.d(TAG, " Current Movie: >>> ${movie.id ?: -1}")
+            Log.d(TAG, "+++ Current Movie: ${movie.id ?: -1}")
             val url = getImageUrl(movie)
 
             binding.apply {

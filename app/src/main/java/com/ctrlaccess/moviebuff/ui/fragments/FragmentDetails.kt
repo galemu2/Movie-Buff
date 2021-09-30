@@ -23,11 +23,7 @@ class FragmentDetails constructor(private val glide: RequestManager) : Fragment(
             val poster = getImageUrl(args.movie)
             glide.load(poster)
                 .into(imageViewMovieDetailPoster)
-            /*Glide.with(imageViewMovieDetailPoster)
-                .load(poster)
-                .error(R.drawable.movie_place_holder)
-                .centerCrop()
-                .into(imageViewMovieDetailPoster)*/
+
 
             val title = args.movie.title
             val releaseDate = args.movie.release_date

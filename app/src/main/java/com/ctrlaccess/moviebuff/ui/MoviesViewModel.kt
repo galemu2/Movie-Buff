@@ -38,8 +38,6 @@ class MoviesViewModel @Inject constructor(
     val popularMovies: LiveData<Event<Resource<Flow<PagingData<Result>>>>>
         get() = _popularMovies
 
-
-    //val popularMovies = repo.getPopularMovies()?.cachedIn(viewModelScope)
     fun getPopularMovies(){
         _popularMovies.value = Event(Resource.loading(null))
         viewModelScope.launch {
@@ -47,9 +45,9 @@ class MoviesViewModel @Inject constructor(
             response?.let {
                 _popularMovies.value = Event((Resource.success(it.cachedIn(viewModelScope))))
             }
-            //_popularMovies.value = Event()
         }
     }
+
     fun getCurrentMovies() {
         _currentMovies.value = Event(Resource.loading(null))
         viewModelScope.launch {
@@ -65,5 +63,4 @@ class MoviesViewModel @Inject constructor(
     fun moviePopularError(boolean: Boolean) {
         _moviePopularError.value = boolean
     }
-
 }

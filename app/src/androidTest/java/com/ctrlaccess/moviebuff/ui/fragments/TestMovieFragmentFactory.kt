@@ -1,15 +1,13 @@
-package com.ctrlaccess.moviebuff.ui
+package com.ctrlaccess.moviebuff.ui.fragments
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import com.bumptech.glide.RequestManager
 import com.ctrlaccess.moviebuff.adapters.MoviesCurrentAdapter
 import com.ctrlaccess.moviebuff.adapters.MoviesPopularAdaptor
-import com.ctrlaccess.moviebuff.ui.fragments.FragmentDetails
-import com.ctrlaccess.moviebuff.ui.fragments.FragmentMain
 import javax.inject.Inject
 
-class MovieFragmentFactory @Inject constructor(
+class TestMovieFragmentFactory @Inject constructor(
     private val moviesCurrentAdapter: MoviesCurrentAdapter,
     private val moviesPopularAdaptor: MoviesPopularAdaptor,
     private val glide: RequestManager,

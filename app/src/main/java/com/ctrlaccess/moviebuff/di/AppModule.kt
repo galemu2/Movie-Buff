@@ -2,8 +2,11 @@ package com.ctrlaccess.moviebuff.di
 
 import android.content.Context
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.ctrlaccess.moviebuff.R
+import com.ctrlaccess.moviebuff.adapters.MoviesCurrentAdapter
+import com.ctrlaccess.moviebuff.adapters.MoviesPopularAdaptor
 import com.ctrlaccess.moviebuff.data.remote.MoviesApi
 import com.ctrlaccess.moviebuff.repo.MoviesRepo
 import com.ctrlaccess.moviebuff.repo.RepositoryInterface
@@ -48,4 +51,12 @@ class AppModule {
                 .placeholder(R.drawable.movie_place_holder)
                 .error(R.drawable.movie_place_holder)
         )
+
+    @Provides
+    @Singleton
+    fun provideMoviesCurrentAdapter(glide: RequestManager) = MoviesCurrentAdapter(glide)
+
+    @Provides
+    @Singleton
+    fun provideMoviesPopularAdaptor(glide: RequestManager) = MoviesPopularAdaptor(glide)
 }

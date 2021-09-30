@@ -3,15 +3,19 @@ package com.ctrlaccess.moviebuff.repo
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.ctrlaccess.moviebuff.FakeData
 import com.ctrlaccess.moviebuff.data.MoviesPagingSource
 import com.ctrlaccess.moviebuff.data.model.MoviesCurrent
+import com.ctrlaccess.moviebuff.data.model.MoviesPopular
 import com.ctrlaccess.moviebuff.data.model.Result
 import com.ctrlaccess.moviebuff.data.remote.FakeMoviesApi
+import com.ctrlaccess.moviebuff.data.remote.MoviesApi
 import com.ctrlaccess.moviebuff.util.Resource
 import com.ctrlaccess.moviebuff.util.Status
 import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 
-class FakeMoviesRepo : RepositoryInterface {
+class FakeTestMoviesRepo : RepositoryInterface {
 
     val result = Result(
         genre_ids = listOf(1, 2),
@@ -31,7 +35,7 @@ class FakeMoviesRepo : RepositoryInterface {
         return if (shouldReturnNetworkError) {
             Resource(Status.ERROR, null, "Error")
         } else {
-            Resource(Status.SUCCESS, MoviesCurrent(listOf(result)), null)
+            Resource(Status.SUCCESS, MoviesCurrent(listOf(FakeData.movies, FakeData.movies, FakeData.movies)), null)
         }
     }
 
@@ -40,6 +44,7 @@ class FakeMoviesRepo : RepositoryInterface {
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = { MoviesPagingSource(FakeMoviesApi()) }
         ).flow
+
     }
 
 

@@ -28,7 +28,7 @@ import javax.inject.Inject
 class FragmentMain @Inject constructor(
     private val moviesCurrentAdapter: MoviesCurrentAdapter,
     private val moviesPopularAdaptor: MoviesPopularAdaptor,
-    private var viewModel: MoviesViewModel? = null
+    var viewModel: MoviesViewModel? = null
 ) :
     Fragment(R.layout.fragment_main) {
 

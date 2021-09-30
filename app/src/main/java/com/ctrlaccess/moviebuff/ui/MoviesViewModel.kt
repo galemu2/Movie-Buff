@@ -42,7 +42,7 @@ class MoviesViewModel @Inject constructor(
         _popularMovies.value = Event(Resource.loading(null))
         viewModelScope.launch {
             val response = repo.getPopularMovies()
-            response?.let {
+            response.let {
                 _popularMovies.value = Event((Resource.success(it.cachedIn(viewModelScope))))
             }
         }

@@ -10,5 +10,5 @@ interface RepositoryInterface {
 
     suspend fun getCurrentMovies(): Resource<MoviesCurrent>
 
-    fun getPopularMovies(): Flow<PagingData<Result>>?
+    fun getPopularMovies(): Flow<PagingData<Result>>
 }

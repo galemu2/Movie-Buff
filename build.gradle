@@ -12,6 +12,7 @@ buildscript {
         hilt_testing_version="2.37"
         coroutine_test_version="1.5.1"
         espresso_version="3.3.0"
+        androidx_arch_core_version="2.1.0"
     }
 
     repositories {

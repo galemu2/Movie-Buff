@@ -14,7 +14,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
+    lateinit var navController: NavController
+
     @Inject
     lateinit var movieFragmentFactory: MovieFragmentFactory
 

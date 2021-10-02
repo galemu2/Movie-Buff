@@ -1,6 +1,5 @@
 package com.ctrlaccess.moviebuff.ui.fragments
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -29,8 +28,7 @@ class FragmentDetailsTest {
     @Inject
     lateinit var testFragmentFactory: TestMovieFragmentFactory
 
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
 
     @Before
     fun setUp() {
@@ -43,11 +41,9 @@ class FragmentDetailsTest {
 
     @Test
     fun activateFragmentDetails_DisplayUi() {
-        val movies = FakeData.movies
-        val bundle = FragmentDetailsArgs(movies).toBundle()
+         val bundle = FragmentDetailsArgs(FakeData.movies).toBundle()
         launchFragmentInHiltContainer<FragmentDetails>(
             fragmentArgs = bundle,
-           /* themeResId = R.style.Theme_MovieBuff,*/
             fragmentFactory = testFragmentFactory
         )
 

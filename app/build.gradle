@@ -103,17 +103,18 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
     androidTestImplementation "com.google.truth:truth:$truth_version"
-    androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_test_version"){
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_test_version") {
         exclude group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
     }
-    //androidTestImplementation "org.mockito:mockito-core:$mockito_version"
+    // androidTestImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
+    // NavController test
+    // androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_testing_version"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_testing_version"
 
     debugImplementation "androidx.fragment:fragment-testing:1.3.6"
-
 }
 
 kapt {

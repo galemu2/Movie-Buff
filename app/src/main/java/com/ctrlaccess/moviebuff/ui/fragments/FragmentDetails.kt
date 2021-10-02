@@ -11,7 +11,8 @@ import com.ctrlaccess.moviebuff.util.UtilObjects.getImageUrl
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentDetails constructor(private val glide: RequestManager) : Fragment(R.layout.fragment_details) {
+class FragmentDetails constructor(private val glide: RequestManager) :
+    Fragment(R.layout.fragment_details) {
 
     private val args by navArgs<FragmentDetailsArgs>()
 

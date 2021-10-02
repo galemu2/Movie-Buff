@@ -9,12 +9,12 @@ buildscript {
         retrofit_version = "2.9.0"
         navigation_version = "2.3.5"
         nav_version = "2.3.5"
-        hilt_testing_version="2.37"
-        coroutine_test_version="1.5.1"
-        espresso_version="3.3.0"
-        androidx_arch_core_version="2.1.0"
-        mockito_version="3.12.4"
-
+        hilt_testing_version = "2.37"
+        coroutine_test_version = "1.5.1"
+        espresso_version = "3.3.0"
+        androidx_arch_core_version = "2.1.0"
+        mockito_version = "3.12.4"
+        nav_version = "2.3.5"
     }
 
     repositories {

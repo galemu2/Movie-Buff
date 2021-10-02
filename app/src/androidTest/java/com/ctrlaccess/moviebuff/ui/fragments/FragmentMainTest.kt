@@ -1,7 +1,6 @@
 package com.ctrlaccess.moviebuff.ui.fragments
 
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
@@ -34,16 +33,12 @@ class FragmentMainTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
-
     @Inject
     lateinit var testFragmentFactory: TestMovieFragmentFactory
 
     @Before
     fun setUp() {
         hiltRule.inject()
-
     }
 
     @After

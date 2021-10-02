@@ -5,7 +5,7 @@ import com.ctrlaccess.moviebuff.data.model.MoviesCurrent
 import com.ctrlaccess.moviebuff.data.model.MoviesPopular
 import retrofit2.Response
 
-class FakeMoviesApi : MoviesApi {
+class FakeMoviesAndroidApi : MoviesApi {
     private val movies = listOf(FakeData.movies, FakeData.movies, FakeData.movies, FakeData.movies)
     override suspend fun getCurrentMovies(
         page: Int,

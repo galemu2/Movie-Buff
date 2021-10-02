@@ -5,10 +5,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.MediumTest
 import com.ctrlaccess.moviebuff.FakeData
@@ -53,7 +51,7 @@ class FragmentMainTest {
     }
 
     @Test
-    fun displayMoviesInView_navigateToCurrentMovieDetails() {
+    fun displayMoviesInView_testNavigateToCurrentMovieDetails() {
         val navController1 = mock(NavController::class.java)
         launchFragmentInHiltContainer<FragmentMain>(
             fragmentFactory = testFragmentFactory
@@ -72,11 +70,10 @@ class FragmentMainTest {
                 FakeData.movies
             )
         )
-
     }
 
     @Test
-    fun displayMoviesInView_navigateToPopularMovieDetails() {
+    fun displayMoviesInView_testNavigateToPopularMovieDetails() {
         val navController = mock(NavController::class.java)
         launchFragmentInHiltContainer<FragmentMain>(
             fragmentFactory = testFragmentFactory
@@ -94,6 +91,5 @@ class FragmentMainTest {
                 FakeData.movies
             )
         )
-
     }
 }

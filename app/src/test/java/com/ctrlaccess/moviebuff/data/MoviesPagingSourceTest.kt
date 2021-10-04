@@ -23,7 +23,6 @@ class MoviesPagingSourceTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-
     @Before
     fun setUp() {
     }

@@ -13,8 +13,10 @@ buildscript {
         coroutine_test_version = "1.5.1"
         espresso_version = "3.3.0"
         androidx_arch_core_version = "2.1.0"
+        androidx_test_core = "1.4.0"
         mockito_version = "3.12.4"
         nav_version = "2.3.5"
+        robolectric_version = '4.6.1'
     }
 
     repositories {

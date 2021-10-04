@@ -81,6 +81,7 @@ dependencies {
 
     // dagger-hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation 'com.google.ar:core:1.27.0'
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
     // Glide
@@ -92,11 +93,15 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     testImplementation "com.google.truth:truth:$truth_version"
     // Robolectric environment
-    testImplementation 'androidx.test:core:1.4.0'
+    testImplementation "androidx.test:core:$androidx_test_core"
     // Mockito framework
     testImplementation 'org.mockito:mockito-core:3.12.4'
     testImplementation "androidx.arch.core:core-testing:$androidx_arch_core_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_test_version"
+
+    testImplementation "com.google.dagger:hilt-android-testing:$hilt_testing_version"
+    kaptTest "com.google.dagger:hilt-android-compiler:$hilt_testing_version"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
 
     androidTestImplementation "androidx.arch.core:core-testing:$androidx_arch_core_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -108,11 +113,12 @@ dependencies {
     }
     // androidTestImplementation "org.mockito:mockito-core:$mockito_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
-    // NavController test
-    // androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    // Robolectric environment
+    androidTestImplementation "androidx.test:core:$androidx_test_core"
 
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_testing_version"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_testing_version"
+    androidTestImplementation "org.robolectric:robolectric:$robolectric_version"
 
     debugImplementation "androidx.fragment:fragment-testing:1.3.6"
 }

@@ -16,7 +16,7 @@ import org.robolectric.annotation.LooperMode
 @HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 @LooperMode(LooperMode.Mode.PAUSED)
-@Config(application = HiltTestApplication::class)
+//@Config(application = HiltTestApplication::class)
 class RoboMainActivityTest {
 
     @get:Rule

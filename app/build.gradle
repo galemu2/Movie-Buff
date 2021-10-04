@@ -57,6 +57,7 @@ android {
     testOptions {
         unitTests.includeAndroidResources = true
     }
+    compileSdkVersion 30
 
 }
 

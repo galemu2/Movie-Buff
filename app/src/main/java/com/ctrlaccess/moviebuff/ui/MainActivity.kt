@@ -12,9 +12,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity constructor(private var navController: NavController? = null) :
+    AppCompatActivity() {
 
-    lateinit var navController: NavController
 
     @Inject
     lateinit var movieFragmentFactory: MovieFragmentFactory
@@ -26,12 +26,12 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
                 as NavHostFragment
-        navController = navHostFragment.findNavController()
-        val appBarConfig = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfig)
+        navController = navController ?: navHostFragment.findNavController()
+        val appBarConfig = AppBarConfiguration(navController!!.graph)
+        setupActionBarWithNavController(navController!!, appBarConfig)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+        return navController?.navigateUp() ?: super.onSupportNavigateUp()
     }
 }

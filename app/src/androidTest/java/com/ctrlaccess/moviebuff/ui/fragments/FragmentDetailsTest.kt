@@ -1,6 +1,9 @@
 package com.ctrlaccess.moviebuff.ui.fragments
 
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.MediumTest
@@ -15,6 +18,8 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito
+import org.mockito.Mockito.verify
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -28,8 +33,6 @@ class FragmentDetailsTest {
     @Inject
     lateinit var testFragmentFactory: TestMovieFragmentFactory
 
-
-
     @Before
     fun setUp() {
         hiltRule.inject()
@@ -41,7 +44,7 @@ class FragmentDetailsTest {
 
     @Test
     fun activateFragmentDetails_DisplayUi() {
-         val bundle = FragmentDetailsArgs(FakeData.movies).toBundle()
+        val bundle = FragmentDetailsArgs(FakeData.movies).toBundle()
         launchFragmentInHiltContainer<FragmentDetails>(
             fragmentArgs = bundle,
             fragmentFactory = testFragmentFactory
@@ -50,5 +53,4 @@ class FragmentDetailsTest {
         onView(withId(R.id.textView_movie_details_release_date)).check(matches(isDisplayed()))
         onView(withId(R.id.textView_movie_details_release_date)).check(matches(withText("yesterday")))
     }
-
 }

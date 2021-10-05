@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.core.util.Preconditions
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import com.ctrlaccess.moviebuff.ui.HiltTestActivity
@@ -18,6 +20,7 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
     themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
     fragmentFactory: FragmentFactory? = null,
+    navHostController: NavHostController? = null,
     crossinline action: T.() -> Unit = {}
 ) {
     val mainActivityIntent = Intent.makeMainActivity(
@@ -25,7 +28,10 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
             ApplicationProvider.getApplicationContext(),
             HiltTestActivity::class.java
         )
-    ).putExtra("androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY", themeResId)
+    ).putExtra(
+        "androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY",
+        themeResId
+    )
 
     ActivityScenario.launch<HiltTestActivity>(mainActivityIntent).onActivity { activity ->
         fragmentFactory?.let {
@@ -36,6 +42,15 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
             T::class.java.name
         )
         fragment.arguments = fragmentArgs
+
+        // navHostController
+        navHostController?.let {
+            fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
+                if (viewLifecycleOwner != null) {
+                    Navigation.setViewNavController(fragment.requireView(), it)
+                }
+            }
+        }
 
         // fragment transaction used to launch fragment
         activity.supportFragmentManager.beginTransaction()

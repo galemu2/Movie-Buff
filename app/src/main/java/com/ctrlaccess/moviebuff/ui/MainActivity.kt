@@ -15,7 +15,6 @@ import javax.inject.Inject
 class MainActivity constructor(private var navController: NavController? = null) :
     AppCompatActivity() {
 
-
     @Inject
     lateinit var movieFragmentFactory: MovieFragmentFactory
 

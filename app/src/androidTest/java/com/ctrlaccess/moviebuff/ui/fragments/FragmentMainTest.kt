@@ -36,7 +36,7 @@ class FragmentMainTest {
     @Inject
     lateinit var testFragmentFactory: TestMovieFragmentFactory
 
-    @Before
+     @Before
     fun setUp() {
         hiltRule.inject()
     }
@@ -87,4 +87,5 @@ class FragmentMainTest {
             )
         )
     }
+
 }

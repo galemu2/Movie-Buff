@@ -18,6 +18,7 @@ buildscript {
         nav_version = "2.3.5"
         robolectric_version = '4.6.1'
         nav_version = "2.3.5"
+        databinding_library_version="3.2.0-alpha11"
 
     }
 

@@ -22,6 +22,10 @@ android {
     val API_KEY :String = BuildConfig.MOVIES_API_KEY
  ```
 
- ## License
+## E2E testing recoded
+
+[git file]()
+
+## License
 
 MIT

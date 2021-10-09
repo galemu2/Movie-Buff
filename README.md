@@ -24,7 +24,7 @@ android {
 
 ## E2E testing recoded
 
-[git file]()
+[git file](~/e2eTestPreview/untitled.gif)
 
 ## License
 

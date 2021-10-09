@@ -3,8 +3,7 @@ package com.ctrlaccess.moviebuff.ui
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewAction
-import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -13,6 +12,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
 import com.ctrlaccess.moviebuff.R
 import com.ctrlaccess.moviebuff.adapters.MoviesCurrentAdapter
+import com.ctrlaccess.moviebuff.util.DataBindingIdlingResource
+import com.ctrlaccess.moviebuff.util.EspressoIdlingResource
+import com.ctrlaccess.moviebuff.util.monitorActivity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
@@ -28,21 +30,36 @@ class MainActivityTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
+    // idling resource that waits for data binding (no pending bindings)
+    private val dataBindingIdlingResource = DataBindingIdlingResource()
+
+    private lateinit var activityScenario: ActivityScenario<MainActivity>
+
     @Before
     fun setUp() {
         hiltRule.inject()
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
+        IdlingRegistry.getInstance().register(dataBindingIdlingResource)
+
+
     }
 
     @After
     fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
+        IdlingRegistry.getInstance().unregister(dataBindingIdlingResource)
+
+        // close the activity
+        activityScenario.close()
     }
 
     @Test
-    fun viewMainFragment() = runBlocking {
+    fun viewMainFragment(): Unit = runBlocking {
         // set initial state
 
         // Start up the activity
-        val activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        dataBindingIdlingResource.monitorActivity(activityScenario)
 
         // Espresso code
         onView(withId(R.id.textView_movies_current)).check(matches(isDisplayed()))
@@ -51,17 +68,15 @@ class MainActivityTest {
         // RecyclerViewActions.actionOnItemAtPosition<MoviesCurrentAdapter.CurrentViewHolder>(0, click())
         onView(withId(R.id.textView_movies_popular)).check(matches(isDisplayed()))
         onView(withId(R.id.recyclerView_movies_popular)).check(matches(isDisplayed()))
-
-        // close the activity
-        activityScenario.close()
     }
 
     @Test
-    fun navigateToDetailsFragment_fromCurrentMvoies() = runBlocking {
+    fun navigateToDetailsFragment_fromCurrentMvoies(): Unit = runBlocking {
         // set initial state
 
         // Start up the activity
-        val activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        dataBindingIdlingResource.monitorActivity(activityScenario)
 
         // Espresso code
         onView(withId(R.id.textView_movies_current)).check(matches(isDisplayed()))
@@ -72,17 +87,15 @@ class MainActivityTest {
             )
         )
         onView(withId(R.id.textView_movie_details_title)).check(matches(isDisplayed()))
-
-        // close the activity
-        activityScenario.close()
     }
 
     @Test
-    fun navigateToDetailsFragment_fromPopularMovies() = runBlocking {
+    fun navigateToDetailsFragment_fromPopularMovies(): Unit = runBlocking {
         // set initial state
 
         // Start up the activity
-        val activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        dataBindingIdlingResource.monitorActivity(activityScenario)
 
         // Espresso code
         onView(withId(R.id.textView_movies_popular)).check(matches(isDisplayed()))
@@ -94,9 +107,5 @@ class MainActivityTest {
         )
 
         onView(withId(R.id.textView_movie_details_title)).check(matches(isDisplayed()))
-
-
-        // close the activity
-        activityScenario.close()
     }
 }

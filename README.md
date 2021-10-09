@@ -25,9 +25,10 @@ android {
 ## E2E testing preview
 
 <p float="left">
-    <img src="e2eTestPreview/untitled.gif" alt="E2E test" title="E2E test" width="200"/>
 
-    <img src="e2eTestPreview/slowVersion.gif" alt="E2E test (Slow speed)" title="E2E test" width="200"/>
+   <img src="e2eTestPreview/untitled.gif" alt="E2E test" title="E2E test" width="200"/>
+
+   <img src="e2eTestPreview/slowVersion.gif" alt="E2E test (Slow speed)" title="E2E test" width="200"/>
 </p>
 
 ## License

@@ -3,6 +3,7 @@ package com.ctrlaccess.moviebuff.ui
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -71,7 +72,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun navigateToDetailsFragment_fromCurrentMvoies(): Unit = runBlocking {
+    fun navigateToDetailsFragment_fromCurrentMovies(): Unit = runBlocking {
         // set initial state
 
         // Start up the activity
@@ -88,6 +89,30 @@ class MainActivityTest {
         )
         onView(withId(R.id.textView_movie_details_title)).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun navigateToDetailsFragment_fromCurrentMovies_backToMain(): Unit = runBlocking {
+        // set initial state
+
+        // Start up the activity
+        activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        dataBindingIdlingResource.monitorActivity(activityScenario)
+
+        // Espresso code
+        onView(withId(R.id.textView_movies_current)).check(matches(isDisplayed()))
+        onView(withId(R.id.recyclerView_movies_current)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<MoviesCurrentAdapter.CurrentViewHolder>(
+                0,
+                click()
+            )
+        )
+        onView(withId(R.id.textView_movie_details_title)).check(matches(isDisplayed()))
+
+        pressBack()
+        onView(withId(R.id.textView_movies_current)).check(matches(isDisplayed()))
+        onView(withId(R.id.recyclerView_movies_current)).check(matches(isDisplayed()))
+    }
+
 
     @Test
     fun navigateToDetailsFragment_fromPopularMovies(): Unit = runBlocking {
@@ -108,4 +133,30 @@ class MainActivityTest {
 
         onView(withId(R.id.textView_movie_details_title)).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun navigateToDetailsFragment_fromPopularMovies_backToMain(): Unit = runBlocking {
+        // set initial state
+
+        // Start up the activity
+        activityScenario = ActivityScenario.launch(MainActivity::class.java)
+        dataBindingIdlingResource.monitorActivity(activityScenario)
+
+        // Espresso code
+        onView(withId(R.id.textView_movies_popular)).check(matches(isDisplayed()))
+        onView(withId(R.id.recyclerView_movies_popular)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<MoviesCurrentAdapter.CurrentViewHolder>(
+                0,
+                click()
+            )
+        )
+
+        onView(withId(R.id.textView_movie_details_title)).check(matches(isDisplayed()))
+
+        pressBack()
+
+        onView(withId(R.id.textView_movies_popular)).check(matches(isDisplayed()))
+        onView(withId(R.id.recyclerView_movies_popular)).check(matches(isDisplayed()))
+    }
+
 }
